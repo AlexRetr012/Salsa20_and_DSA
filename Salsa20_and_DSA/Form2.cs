@@ -6,7 +6,7 @@ namespace Salsa20_and_DSA
 {
     public sealed class Salsa20 : SymmetricAlgorithm
     {
-
+        
         public Salsa20()
         {
             LegalBlockSizesValue = new[] { new KeySizes(512, 512, 0) };
@@ -174,7 +174,9 @@ namespace Salsa20_and_DSA
             public void Dispose()
             {
                 if (m_state != null)
+                {
                     Array.Clear(m_state, 0, m_state.Length);
+                }
                 m_state = null;
             }
 
@@ -373,6 +375,8 @@ namespace Salsa20_and_DSA
         private void GenerateQ_Click(object sender, EventArgs e)
         {
             //Создание числа Q 64-127
+            button4.Enabled = false;
+            button9.Enabled = false;
             button2.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = false;
@@ -488,7 +492,7 @@ namespace Salsa20_and_DSA
         {
             //Useless
         }
-
+        string hash;
         private void button8_Click(object sender, EventArgs e)
         {
             int k = 0;
@@ -506,6 +510,8 @@ namespace Salsa20_and_DSA
             var result = new SHA256Managed().ComputeHash(data);
             string hashsha256 = BitConverter.ToString(result).Replace("-", "").ToLower();
             //richTextBox1.Text = hashsha256;
+            richTextBox3.AppendText("Log > Хэш сообщения сгенерирован успешно. Хэш = " + hashsha256 + "\n");
+            hash = hashsha256;
             int h1 = Convert.ToInt32(hashsha256.Length);
             string val = ToBinary(h1);
             int countTrim = 0;
@@ -559,8 +565,8 @@ namespace Salsa20_and_DSA
                     s = Convert.ToInt32((Math.Pow(k, -1) % q) * (h + x * r) % q);
                     if (s != 0)
                     {
-                        break;
                         f = false;
+                        break;
                     }
                 }
             }
@@ -573,15 +579,23 @@ namespace Salsa20_and_DSA
 
         private void button9_Click(object sender, EventArgs e)
         {
+            //Проверка подписи и хэша
+            //Отключено
 
         }
 
+        
         private void button3_Click(object sender, EventArgs e)
         {
+            //Отправка переменных Q,P,G,text,hashed message,open key,подпись
+            CallBackMy.callbackEventHandler(Convert.ToString(textBox1.Text), Convert.ToString(textBox2.Text), Convert.ToString(textBox5.Text),
+                Convert.ToString(richTextBox1.Text),Convert.ToString(hash),Convert.ToString(textBox4.Text), Convert.ToString(textBox6.Text), Convert.ToString(textBox7.Text), Convert.ToString(textBox8.Text));
+
 
         }
         private void button7_Click(object sender, EventArgs e)
         {
+            //Шифровка
             string text = richTextBox1.Text;
             byte[] key = { 117, 211, 146, 162, 230, 86, 207, 172, 3, 183, 170, 209, 16, 176, 21, 236, 94, 99, 85, 105, 120, 80, 208, 113, 59, 79, 207, 45, 198, 87, 227, 161 };
             byte[] iv = { 184, 68, 238, 192, 150, 147, 73, 174 };
@@ -606,6 +620,7 @@ namespace Salsa20_and_DSA
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //Расшифровка Отключена
             byte[] key = { 117, 211, 146, 162, 230, 86, 207, 172, 3, 183, 170, 209, 16, 176, 21, 236, 94, 99, 85, 105, 120, 80, 208, 113, 59, 79, 207, 45, 198, 87, 227, 161 };
             byte[] iv = { 184, 68, 238, 192, 150, 147, 73, 174 };
             string decryptedText;

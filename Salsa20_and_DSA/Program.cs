@@ -14,4 +14,10 @@ namespace Salsa20_and_DSA
             Application.Run(new Form1());
         }
     }
+    public static class CallBackMy
+    {
+        public delegate void callbackEvent(string p,string q,string g,string text,
+            string hashtext,string openkey,string r,string s,string h);
+        public static callbackEvent callbackEventHandler;
+    }
 }
