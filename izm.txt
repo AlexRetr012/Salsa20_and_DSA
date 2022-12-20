@@ -1,0 +1,121 @@
+private void button5_Click(object sender, EventArgs e)
+        {
+            //Проверка числа P
+            if (textBox1.Text != "")
+            {
+                richTextBox1.Text = "";
+                int p = Convert.ToInt32(textBox1.Text);
+                bool isPrime = true;
+                Random rnd = new Random();
+                for (int i = 2; i <= Math.Sqrt(p); i++)
+                {
+                    if (p % i == 0)
+                    {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime)
+                {
+                    richTextBox1.Text = "";
+                    if (primeFerma(p) == true)
+                    {
+                        richTextBox3.AppendText("Log > Число P было проверено на простоту.Тест пройден. \n");
+                        richTextBox3.AppendText("Log > Число P было проверено на простоту через теорему Ферма.Оно простое.Тест пройден. \n");
+                        button5.Enabled = false;
+                    }
+                    else
+                    {
+                        richTextBox2.AppendText("Ошибка #0002f. Число P не прошло проверку на простоту через теорему Ферма.Число составное. Будет сгенерировано другое число. \n");
+                        int pg = (Convert.ToInt32(textBox2.Text)) * rnd.Next(2, 100) + 1;
+                        textBox1.Text = pg.ToString();
+                        richTextBox1.AppendText(Text);
+                    }
+                    
+                }
+                else
+                {
+                    richTextBox1.Text = "";
+                    richTextBox2.AppendText("Ошибка #0001. Число P не прошло проверку на простоту. Будет сгенерировано другое число. \n");
+                    richTextBox2.AppendText("Ошибка #0002f. Число P не прошло проверку на простоту через теорему Ферма.Число составное. Будет сгенерировано другое число. \n");
+                    int pg = (Convert.ToInt32(textBox2.Text)) * rnd.Next(2, 100) + 1;
+                    textBox1.Text = pg.ToString();
+                    richTextBox1.AppendText(Text);
+                }
+            }
+            else
+            {
+                try
+                {
+                    richTextBox2.AppendText("Ошибка #0003. Не сгенерировано число P!  \n");
+                    button5.Enabled = false;
+                }
+                catch
+                {
+                    richTextBox2.AppendText("Ошибка #0003. Не сгенерировано число P!   \n");
+                    button5.Enabled = false;
+                }
+            }
+
+
+        }
+ private void button6_Click(object sender, EventArgs e)
+        {
+            //Проверка числа Q
+            if (textBox2.Text != "")
+            {
+                richTextBox1.Text = "";
+                int q = Convert.ToInt32(textBox2.Text);
+                bool isPrime = true;
+                Random rnd = new Random();
+                for (int i = 2; i <= Math.Sqrt(q); i++)
+                {
+                    if (q % i == 0)
+                    {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime)
+                {
+                    richTextBox1.Text = "";
+                    if(primeFerma(q)==true)
+                    {
+                        richTextBox3.AppendText("Log > Число Q было проверено на простоту.Тест пройден. \n");
+                        richTextBox3.AppendText("Log > Число Q было проверено на простоту через теорему Ферма.Тест пройден. \n");
+                        button6.Enabled = false;
+                        GenerateP.Enabled = true;
+                    }
+                    else
+                    {
+                        richTextBox2.AppendText("Ошибка #0002f. Число Q не прошло проверку на простоту через теорему Ферма. Будет сгенерировано другое число. \n");
+                        int pq = rnd.Next(64, 127);
+                        textBox2.Text = pq.ToString();
+                    }
+                    
+                }
+                else
+                {
+                    richTextBox1.Text = "";
+                    richTextBox2.AppendText("Ошибка #0002. Число Q не прошло проверку на простоту. Будет сгенерировано другое число. \n");
+                    richTextBox2.AppendText("Ошибка #0002f. Число Q не прошло проверку на простоту через теорему Ферма.Число Q составное.Будет сгенерировано другое число. \n");
+                    int pq = rnd.Next(64, 127);
+                    textBox2.Text = pq.ToString();
+                }
+            }
+            else
+            {
+                try
+                {
+                    richTextBox2.AppendText("Ошибка #0004. Не сгенерировано число Q!   \n");
+                    button6.Enabled = false;
+                }
+                catch
+                {
+                    richTextBox2.AppendText("Ошибка #0004. Не сгенерировано число Q!   \n");
+                    button6.Enabled = false;
+                }
+
+            }
+
+        }
